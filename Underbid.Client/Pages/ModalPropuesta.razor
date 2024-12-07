@@ -1,0 +1,78 @@
+﻿@inject IPujasService pujasService;
+@inject IPublicacionesService publicacionService;
+
+<h4><strong>Fecha Actual: </strong>@DateTime.Now</h4>
+<h4><strong>Precio Actual: </strong>@publicacioneDTO.PrecioInicial</h4>
+
+<br />
+
+<EditForm Model="pujaDTO" OnValidSubmit="OnValidSubmit">
+
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <div class="form-floating mb-3">
+        <InputNumber type="text" class="form-control" id="floatingInput" @bind-Value="pujaDTO.montoOfertado" placeholder="agregar precio"></InputNumber>
+        <label for="floatingInput">Propuesta de precio</label>
+    </div>
+
+    <h3 class="separador">───────────────────────</h3>
+
+    <button type="submit" class="btn btn-info">Agregar puja</button>
+
+</EditForm>
+
+
+@code 
+{
+
+    [Parameter]
+    public long idPublicacion { get; set; } = 0;
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    PujaDTO pujaDTO = new PujaDTO();
+
+    PublicacioneDTO publicacioneDTO = new PublicacioneDTO();
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (idPublicacion != 0)
+        {
+            pujaDTO.usuarioId = 1;
+            pujaDTO.publicacionId = idPublicacion;
+            pujaDTO.fechaPuja = DateTime.UtcNow;
+            pujaDTO.estado = "Pendiente";
+        }
+
+        publicacioneDTO = await publicacionService.BuscarPublicacion(idPublicacion);
+
+    }
+
+    private async Task OnValidSubmit()
+    {
+        bool ValorDevuelto = false;
+
+        if (idPublicacion != 0)
+        {
+            Console.WriteLine("estas agregando");
+            ValorDevuelto = await pujasService.CrearPuja(pujaDTO);
+        }
+
+        if (ValorDevuelto == true)
+        {
+            await BlazoredModal.CloseAsync(ModalResult.Ok(ValorDevuelto));
+        }
+        else
+        {
+            Console.WriteLine(ValorDevuelto);
+            Console.WriteLine("No se Ejecuto Correctamente");
+        }
+
+    }
+
+}

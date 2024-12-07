@@ -1,0 +1,56 @@
+﻿@inject IPujasService pujasService;
+
+<div class="contenedorPujas">
+
+    @if (respuestaData != null)
+    {
+        @foreach (var item in respuestaData)
+        {
+
+            <div class="card">
+
+                <h5 class="card-header"><strong>Fernando Alonzo</strong></h5>
+
+                <div class="card-body">
+
+                    <h5 class="card-title">Datos de la puja</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Monto Ofertado:</strong>&nbsp; @item.montoOfertado</li>
+                        <li class="list-group-item"><strong>Fecha Puja:</strong>&nbsp; @item.fechaPuja</li>
+                        <li class="list-group-item"><strong>Estado Puja:</strong>&nbsp; @item.estado</li>
+                    </ul>
+                    
+                </div>
+            </div>
+
+        }
+    }
+    else
+    {
+        <p>No se encontro resultados</p>
+    }
+
+</div>
+
+
+@code
+{
+
+    [Parameter]
+    public long idPublicacion { get; set; } = 0;
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    private List<PujaDTO>? respuestaData;
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        respuestaData = await pujasService.BuscarPujasPorPublicacion(idPublicacion);
+
+    }
+}

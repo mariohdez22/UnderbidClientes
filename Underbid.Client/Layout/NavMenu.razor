@@ -1,0 +1,51 @@
+﻿<nav class="navbar navbar-expand-lg bg-info menuSuperior">
+    <div class="container-fluid">
+        <a class="navbar-brand negrita" href="#">Underbid</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link subnegrita" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link subnegrita" href="PublicacionesSubasta">Subastas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link subnegrita" href="MisPujas">Historial</a>
+                </li>
+
+                @* ---- quitar luego ---- *@
+
+                <li>
+                    <a class="nav-link subnegrita" href="#">|</a>
+                </li>
+
+                @* ---- quitar luego ---- *@
+
+                <li class="nav-item">
+                    <a class="nav-link subnegrita" href="MisSubastas/@idUsuario">Mis Subastas</a>
+                </li>
+
+            </ul>
+            <span class="navbar-text">
+                <a @onclick="IniciarSesion" class="nav-link subnegrita">Iniciar Sesion</a>
+            </span>
+        </div>
+    </div>
+</nav>
+
+@code {
+
+    public long idUsuario = 1;
+
+    [Inject] NavigationManager Navigation { get; set; }
+
+    private void IniciarSesion()
+    {
+        // Navegar a una página que contenga el RemoteAuthenticatorView con Action="login"
+        Navigation.NavigateTo("authentication/login");
+    }
+    
+}

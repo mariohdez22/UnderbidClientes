@@ -1,0 +1,27 @@
+﻿
+.contenedor
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.apartado1
+{
+    width: 100%;
+    height: 100%;
+}
+
+.apartado2
+{
+    width: 100%;
+    height: 100%;
+}
+
+/*------------------------------------------------------------------------------*/
+
+.separador
+{
+    color: #e1e1e1;
+}

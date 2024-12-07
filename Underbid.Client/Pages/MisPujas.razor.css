@@ -1,0 +1,45 @@
+﻿.contenedor
+{
+    width: 100%;
+    height: 83vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 20px;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.contenedor::-webkit-scrollbar
+{
+    -webkit-appearance: none;
+}
+
+.contenedor::-webkit-scrollbar:vertical
+{
+    width: 8px;
+}
+
+.contenedor::-webkit-scrollbar-button:increment, #scroll::-webkit-scrollbar-button
+{
+    display: none;
+}
+
+.contenedor::-webkit-scrollbar:horizontal
+{
+    height: 10px;
+}
+
+.contenedor::-webkit-scrollbar-thumb
+{
+    background-color: #eeeeee;
+    border-radius: 20px;
+    border: 1px solid #D4D4D4;
+}
+
+.contenedor::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+}
+
+/*-------------------------------------------------------------------------------*/

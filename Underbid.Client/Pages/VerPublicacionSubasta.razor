@@ -1,0 +1,149 @@
+﻿@page "/VerPublicacionSubasta"
+@page "/VerPublicacionSubasta/{idPublicacion:long}"
+@inject IPublicacionesService publicacionesService;
+
+<p>Inicio > Publicaciones subasta > Ver Subasta</p>
+
+<div class="contenedor">
+
+    <div class="content1">
+
+        <div class="contenidoSubasta">
+
+            <h1 class="titulo">@publicacione.Titulo</h1>
+
+            <p>@publicacione.Descripcion</p>
+
+            <br/>
+
+            <h3 class="subtitulo">Perfil Requerido</h3>
+
+            <div class="alert alert-light" role="alert">
+                @publicacione.Tecnologias
+            </div>
+
+            <br />
+
+            <h3 class="subtitulo">Datos Importantes</h3>
+
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Creador Subasta:</strong> @publicacione.Usuario?.Nombre</li>
+                <li class="list-group-item"><strong>Inicio:</strong> @publicacione.FechaInicio</li>
+                <li class="list-group-item"><strong>Final:</strong> @publicacione.FechaFin</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="content2">
+
+        <div class="contenidoDetalles">
+
+            <h1 class="titulo2">Detalles del servicio</h1>
+
+            <h3 class="espacio"><strong>Precio Inicial:</strong> $ @publicacione.PrecioInicial USD</h3>
+
+            <h4 class="espacio"><strong>Fecha Inicio:</strong> @publicacione.FechaInicio</h4>
+
+            <h4 class="espacio"><strong>Fecha Final:</strong> @publicacione.FechaFin</h4>
+
+            <br />
+            <hr />
+            <br />
+
+            <h3 class="espacio"><strong>Precio Actual:</strong> @publicacione.PrecioInicial</h3>
+
+            <h4 class="espacio"><strong>Numero de pujas:</strong> 10</h4>
+            <h4 class="espacio"><strong>Estado:</strong> @publicacione.Estado</h4>
+
+            <br />
+            <hr />
+            <br />
+
+            <div class="d-grid gap-2">
+                <a class="btn btn-secondary colorButton" @onclick="@(()=> ShowModalPropuesta(publicacione.PublicacionId))">Pujar subasta</a>
+                <a class="btn btn-secondary" @onclick="@(()=> ShowModalPujas(publicacione.PublicacionId))">Ver pujas actuales</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code 
+{
+
+    [Parameter]
+    public long idPublicacion { get; set; } = 0;
+
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    //----------------------------------------------------------------------------------------------|
+
+    PublicacioneDTO publicacione = new PublicacioneDTO();
+
+    //----------------------------------------------------------------------------------------------|
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (idPublicacion != 0)
+        {
+            publicacione = await publicacionesService.BuscarPublicacion(idPublicacion);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------|
+
+    private async Task ShowModalPujas(long ID)
+    {
+        var options = new ModalOptions()
+            {
+                Size = ModalSize.Medium,
+                Position = ModalPosition.Middle
+            };
+
+        var parametros = new ModalParameters().Add(nameof(ModalPujas.idPublicacion), ID);
+
+        var modal = Modal.Show<ModalPujas>("Pujas Actuales", parametros, options);
+        var resultado = await modal.Result;
+
+        /*
+        
+        if (resultado.Confirmed)
+        {
+            if (resultado.Data.ToString() == "Ejecucion Correcta")
+            {
+                
+            }
+        }
+        
+        */
+
+    }
+
+    private async Task ShowModalPropuesta(long ID)
+    {
+        var options = new ModalOptions()
+            {
+                Size = ModalSize.Medium,
+                Position = ModalPosition.Middle
+            };
+
+        var parametros = new ModalParameters().Add(nameof(ModalPropuesta.idPublicacion), ID);
+
+        var modal = Modal.Show<ModalPropuesta>("Agregar Propuesta", parametros, options);
+        var resultado = await modal.Result;
+
+        if (resultado.Confirmed)
+        {
+            if (resultado.Data as bool? == true)
+            {
+                Console.WriteLine("Ejecucion Correcta");
+            }
+        }
+
+    }
+
+}

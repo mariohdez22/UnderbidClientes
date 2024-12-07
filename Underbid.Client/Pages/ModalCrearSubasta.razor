@@ -1,0 +1,113 @@
+﻿@inject IPublicacionesService publicacionService;
+
+
+
+<EditForm Model="publicacioneDTO" OnValidSubmit="OnValidSubmit">
+
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <div class="contenedor">
+
+        <div class="apartado1">
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Titulo</label>
+                <InputText type="text" class="form-control" @bind-Value="publicacioneDTO.Titulo" placeholder="Agregar titulo"></InputText>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Descripcion</label>
+                <InputTextArea style="height: 124px;" @bind-Value="publicacioneDTO.Descripcion" class="form-control" rows="3"></InputTextArea>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Tecnologias</label>
+                <InputText type="text" class="form-control" @bind-Value="publicacioneDTO.Tecnologias" placeholder="Agregar Tecnologias"></InputText>
+            </div>
+
+        </div>
+
+        <div class="apartado2">
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Perfil requerido</label>
+                <InputText type="text" class="form-control" @bind-Value="publicacioneDTO.PerfilRequerido" placeholder="Agregar Perfil"></InputText>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Precio Inicial</label>
+                <InputNumber type="text" class="form-control" @bind-Value="publicacioneDTO.PrecioInicial" placeholder="Agregar Precio Inicial"></InputNumber>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Fecha Inicio</label>
+                <input type="text" class="form-control" value="@publicacioneDTO.FechaInicio" placeholder="Agregar Fecha" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Fecha fin</label>
+                <input type="text" class="form-control" value="@publicacioneDTO.FechaFin" placeholder="Agregar Fecha" readonly>
+            </div>
+
+        </div>
+    </div>
+
+    <h3 class="separador">─────────────────────────────────────</h3>
+
+    <button type="submit" class="btn btn-info">Crear Subasta</button>
+
+</EditForm>
+
+    
+
+
+
+
+
+@code 
+{
+    [Parameter]
+    public long idUsuario { get; set; } = 0;
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    PublicacioneDTO publicacioneDTO = new PublicacioneDTO();
+
+    //-------------------------------------------------------------------------------------------------------|
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (idUsuario != 0)
+        {
+            publicacioneDTO.UsuarioId = idUsuario;
+            publicacioneDTO.FechaInicio = DateTime.UtcNow;
+            publicacioneDTO.FechaFin = DateTime.UtcNow;
+            publicacioneDTO.Estado = "Activa";
+        }
+
+    }
+
+    private async Task OnValidSubmit()
+    {
+        string ValorDevuelto = "";
+
+        if (idUsuario != 0)
+        {
+            Console.WriteLine("estas agregando");
+            ValorDevuelto = await publicacionService.CrearPublicacion(publicacioneDTO);
+        }
+
+        if (ValorDevuelto == "Ejecucion Correcta")
+        {
+            await BlazoredModal.CloseAsync(ModalResult.Ok(ValorDevuelto));
+        }
+        else
+        {
+            Console.WriteLine(ValorDevuelto);
+            Console.WriteLine("No se Ejecuto Correctamente");
+        }
+
+    }
+
+}

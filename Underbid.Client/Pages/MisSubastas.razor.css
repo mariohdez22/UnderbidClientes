@@ -1,0 +1,164 @@
+﻿/*
+    font-family: "Raleway", serif;
+    font-family: "Open Sans", serif;
+*/
+
+.contenedor
+{
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content1
+{
+    width: 100%;
+    height: 89%;
+    display: flex;
+}
+
+.content2
+{
+    width: 100%;
+    height: 11%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+/*-------------------------------------------------------------------------------*/
+
+.contenidoTarjetas
+{
+    width: 80%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow-y: scroll;
+}
+
+.contenidoTarjetas::-webkit-scrollbar
+{
+    -webkit-appearance: none;
+}
+
+.contenidoTarjetas::-webkit-scrollbar:vertical
+{
+    width: 8px;
+}
+
+.contenidoTarjetas::-webkit-scrollbar-button:increment, #scroll::-webkit-scrollbar-button
+{
+    display: none;
+}
+
+.contenidoTarjetas::-webkit-scrollbar:horizontal
+{
+    height: 10px;
+}
+
+.contenidoTarjetas::-webkit-scrollbar-thumb
+{
+    background-color: #eff4ff;
+    border-radius: 20px;
+    border: 1px solid #c0cff4;
+}
+
+.contenidoTarjetas::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+}
+
+.colorButton
+{
+    background-color: #65a8be !important;
+    border: 1px solid #65a8be;
+}
+
+.tuneo
+{
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+
+.carta-cuerpo
+{
+    height: 13vh;
+}
+
+.carta-cuerpo h5
+{
+    font-family: "Raleway", serif;
+}
+
+.carta-cuerpo p
+{
+    font-family: "Raleway", serif;
+}
+
+i
+{
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #65a8be;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+/*-----------------------------------------------------------------------------*/
+
+.contenidoOpciones
+{
+    width: 20%;
+    height: 100%;
+    padding: 20px;
+}
+
+
+.tituloOpcion
+{
+    font-family: "Raleway", serif;
+    font-weight: 600;
+}
+
+.borde
+{
+    color: #c7c7c7;
+}
+
+/*-----------------------------------------------------------------------------*/
+
+@media (max-width: 1920px)
+{
+    .contenidoTarjetas
+    {
+        width: 85%;
+    }
+
+    .contenidoOpciones
+    {
+        width: 15%;
+    }
+}
+
+@media (max-width: 1539px)
+{
+    .content1
+    {
+        flex-direction: column-reverse;
+    }
+
+    .contenidoTarjetas
+    {
+        width: 100%;
+    }
+
+    .contenidoOpciones
+    {
+        width: 100%;
+        height: 75%;
+    }
+}
